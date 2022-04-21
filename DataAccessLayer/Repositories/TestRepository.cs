@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class LanguageRepository:RepositoryBase<Language>, ILanguageRepository
+    public class TestRepository:RepositoryBase<Test> , ITestRepository
     {
-        public LanguageRepository(WordMasterDbContext context):base(context)
+        public TestRepository(WordMasterDbContext context):base(context)
         {
-        }
 
-    
+        }
     }
 }

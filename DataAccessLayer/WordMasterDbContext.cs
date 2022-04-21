@@ -17,5 +17,6 @@ namespace DataAccessLayer
         public DbSet<Language> Languages { get; set; }
         public DbSet<WordMeaning> WordMeanings { get; set; }
         public DbSet<WordDefinition> WordDefinitions { get; set; }
+        public DbSet<Test> Tests { get; set; }
     }
 }

@@ -1,12 +1,12 @@
-﻿@model WordMaster.Models.WordDefinitionViewModel
-@using DataAccessLayer.Entities
+﻿@model WordMaster.Models.WordMeaningViewModel
+
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
 
-<h4>WordDefinitionViewModel</h4>
+<h4>WordMeaningViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,21 +21,19 @@
             </div>
             }
             <div class="form-group">
-                <label asp-for="Word" class="control-label"></label>
-                <input asp-for="Word" class="form-control" />
-                <span asp-validation-for="Word" class="text-danger"></span>
+                <label asp-for="Meaning" class="control-label"></label>
+                <input asp-for="Meaning" class="form-control" />
+                <span asp-validation-for="Meaning" class="text-danger"></span>
             </div>
-            
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
-              @*  <input asp-for="LangId" class="form-control" />*@
-            <select class="form-control" id="LangId" name="LangId">
-                @foreach (var item in (List<Language>)ViewBag.Langs)
-                {
-                <option title="@item.Name" value="@item.Id">@item.Code</option>
-                }
-            </select>
+                <input asp-for="LangId" class="form-control" />
                 <span asp-validation-for="LangId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WordDefinitionId" class="control-label"></label>
+                <input asp-for="WordDefinitionId" class="form-control" />
+                <span asp-validation-for="WordDefinitionId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

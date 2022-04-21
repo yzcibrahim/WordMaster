@@ -13,9 +13,11 @@ namespace WordMaster.Controllers
     public class WordDefinitionController : Controller
     {
         IWordDefinitionRepository _repository;
-        public WordDefinitionController(IWordDefinitionRepository repository)
+        ILanguageRepository _langRepository;
+        public WordDefinitionController(IWordDefinitionRepository repository, ILanguageRepository langRepository)
         {
             _repository = repository;
+            _langRepository = langRepository;
         }
         // GET: LanguageController
         public ActionResult Index()
@@ -30,7 +32,9 @@ namespace WordMaster.Controllers
                 {
                     Id = item.Id,
                     Word = item.Word,
-                    LangId = item.LangId
+                    LangId = item.LangId,
+                    LangCode = item.Lang.Code,
+                    LangName = item.Lang.Name
                 };
 
                 model.Add(lwm);
@@ -50,6 +54,7 @@ namespace WordMaster.Controllers
                 model.Word = wd.Word;
                 model.LangId = wd.LangId;
             }
+            ViewBag.Langs = _langRepository.List();
 
             return View(model);
         }

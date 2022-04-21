@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IWordDefinitionRepository
+    public interface IWordDefinitionRepository:IRepositoryBase<WordDefinition>
     {
-        List<WordDefinition> List();
-        WordDefinition GetById(int id);
-        void Add(WordDefinition entity);
-        void Update(WordDefinition entity);
-        void Delete(int id);
+        //List<WordDefinition> List();
+        //WordDefinition GetById(int id);
+        //void Add(WordDefinition entity);
+        //void Update(WordDefinition entity);
+        //void Delete(int id);
     }
 }

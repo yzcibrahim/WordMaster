@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace WordMaster.Models
 {
-    public class WordDefinitionViewModel
+    public class WordMeaningViewModel
     {
         public int Id { get; set; }
-        public string Word { get; set; }
+        public string Meaning { get; set; }
         public int LangId { get; set; }
-
-        public string LangCode { get; set; }
-        public string LangName { get; set; }
+        public int? WordDefinitionId { get; set; }
     }
 }
