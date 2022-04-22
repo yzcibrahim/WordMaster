@@ -14,11 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (Model.Id > 0)
             {
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
             }
             <div class="form-group">
                 <label asp-for="Meaning" class="control-label"></label>
@@ -27,12 +27,32 @@
             </div>
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
-                <input asp-for="LangId" class="form-control" />
+                @*<input asp-for="LangId" class="form-control" />*@
+                <select class="form-control" id="LangId" name="LangId">
+                    @foreach (var lang in Model.Languages)
+                    {
+                        <option title="@lang.Name" value="@lang.Id" selected="@lang.Id==Model.LangId?true:false">@lang.Code</option>
+                    }
+                </select>
+
                 <span asp-validation-for="LangId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WordDefinitionId" class="control-label"></label>
-                <input asp-for="WordDefinitionId" class="form-control" />
+                @*<input asp-for="WordDefinitionId" class="form-control" />*@
+                <select class="form-control" id="WordDefinitionId" name="WordDefinitionId">
+                    @foreach (var def in Model.WordDefinitions)
+                    {
+                        if (def.Id == Model.WordDefinitionId)
+                        {
+                            <option selected="selected" value="@def.Id">@def.Word</option>
+                        }
+                        else
+                        {
+                            <option value="@def.Id">@def.Word</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="WordDefinitionId" class="text-danger"></span>
             </div>
             <div class="form-group">

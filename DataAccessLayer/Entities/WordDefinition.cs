@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace DataAccessLayer.Entities
 {
@@ -12,6 +13,7 @@ namespace DataAccessLayer.Entities
         [ForeignKey("LangId")]
         public virtual Language Lang { get; set; }
 
+        [JsonIgnore]
         public virtual List<WordMeaning> WordMeanings { get; set; }
     }
 

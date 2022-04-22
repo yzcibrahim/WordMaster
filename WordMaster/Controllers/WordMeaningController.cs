@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WordMaster.Helpers;
 using WordMaster.Models;
 
 namespace WordMaster.Controllers
@@ -14,9 +15,14 @@ namespace WordMaster.Controllers
     public class WordMeaningController : Controller
     {
         IWordMeaningRepository _repository;
-        public WordMeaningController(IWordMeaningRepository repository)
+        IWordDefinitionRepository _wordDefinitionRepository;
+        ILanguageRepository _languageRepository;
+        public WordMeaningController(IWordMeaningRepository repository, IWordDefinitionRepository wordDefinitionRepository,
+            ILanguageRepository languageRepository)
         {
             _repository = repository;
+            _wordDefinitionRepository = wordDefinitionRepository;
+            _languageRepository = languageRepository;
         }
         // GET: LanguageController
         public ActionResult Index()
@@ -41,6 +47,18 @@ namespace WordMaster.Controllers
                 model = JsonSerializer.Deserialize<WordMeaningViewModel>(serializedText);
             }
 
+            List<Language> languages = _languageRepository.List();
+            //string langsText = JsonSerializer.Serialize(languages);
+            //List<LanguageViewModel> Langs = JsonSerializer.Deserialize<List<LanguageViewModel>>(langsText);
+
+            List<WordDefinition> wordDefinitions = _wordDefinitionRepository.List();
+            //string wordTexts= JsonSerializer.Serialize(wordDefinitions);
+            //List<WordDefinitionViewModel> wordDefs = JsonSerializer.Deserialize<List<WordDefinitionViewModel>>(wordTexts);
+
+            model.Languages = Helper.Convert<List<LanguageViewModel>, List<Language>>(languages);
+            model.WordDefinitions = Helper.Convert<List<WordDefinitionViewModel>, List<WordDefinition>>(wordDefinitions); ;
+
+          
             return View(model);
         }
 

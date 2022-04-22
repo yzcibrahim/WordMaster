@@ -30,7 +30,7 @@
                 <label asp-for="LangId" class="control-label"></label>
               @*  <input asp-for="LangId" class="form-control" />*@
             <select class="form-control" id="LangId" name="LangId">
-                @foreach (var item in (List<Language>)ViewBag.Langs)
+                @foreach (var item in ViewBag.Langs)
                 {
                 <option title="@item.Name" value="@item.Id">@item.Code</option>
                 }
