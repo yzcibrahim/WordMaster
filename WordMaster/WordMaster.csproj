@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\preview.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\dependabot.yml" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\ISSUE_TEMPLATE\icon-request.md" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\release-drafter.yml" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\workflows\deploy.yml" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\workflows\release-notes.yml" />
+    <None Include="wwwroot\lib\bootstrap\icons-1.8.1\.github\workflows\test.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.16">
       <PrivateAssets>all</PrivateAssets>

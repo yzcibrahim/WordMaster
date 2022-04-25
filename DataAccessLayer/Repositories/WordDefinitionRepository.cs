@@ -22,5 +22,15 @@ namespace DataAccessLayer.Repositories
             return liste;
         }
 
+        public List<WordDefinition> List(string searchKeyword)
+        {
+            var liste = _context.Set<WordDefinition>().Include(c => c.Lang)
+                .Include(c => c.WordMeanings).ThenInclude(c => c.Lang)
+                .Where(c=>c.Word.ToUpper()==searchKeyword.ToUpper() 
+                || String.IsNullOrEmpty(searchKeyword))
+                .ToList();
+            return liste;
+        }
+
     }
 }

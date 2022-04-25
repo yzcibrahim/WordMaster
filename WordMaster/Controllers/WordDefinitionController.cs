@@ -22,9 +22,16 @@ namespace WordMaster.Controllers
         // GET: LanguageController
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult ListPartial(string searchKeyword)
+        {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
 
-            List<WordDefinition> liste = _repository.List();
+            List<WordDefinition> liste = searchKeyword != null ?
+                                        _repository.List(searchKeyword) :
+                                        _repository.List();
 
             foreach (WordDefinition item in liste)
             {
@@ -57,9 +64,8 @@ namespace WordMaster.Controllers
 
                 model.Add(lwm);
             }
-            return View(model);
+            return PartialView(model);
         }
-
         // GET: LanguageController/Edit/5
         public ActionResult Edit(int? id)
         {

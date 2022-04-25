@@ -1,0 +1,96 @@
+﻿
+@model IEnumerable<WordMaster.Models.WordDefinitionViewModel>
+    <style>
+
+                #wordsTable {
+                    font-family: Arial, Helvetica, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                    #wordsTable td, #customers th {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                    }
+
+                    /* #wordsTable tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+        */
+                    #wordsTable .trMaster:hover {
+                        background-color: #ddd;
+                    }
+
+                    #wordsTable th {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                        text-align: left;
+                        background-color: #04AA6D;
+                        color: white;
+                    }
+    </style>
+<table class="table" id="wordsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Word)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LangId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int counter = 0; }
+        @foreach (var item in Model)
+        {
+            string bgColor = "cursor:pointer;";// " background-color: #f2f2f2;";
+            if (counter % 2 == 0)
+            {
+                bgColor += " background-color: #f2f2f2;";
+            }
+            <tr class="trMaster" style="@bgColor" onclick="showHideDetail('@Html.Raw($"det_{item.Id}")')">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Word)
+                </td>
+                <td title="@item.LangName">
+                    @Html.DisplayFor(modelItem => item.LangCode)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+            <tr id='@Html.Raw($"det_{item.Id}")' style="display:none">
+                <td colspan="4">
+                    @if (item.Meanings.Count > 0)
+                    {
+                        <table>
+                            <tr>
+                                <th>Meaning</th>
+                                <th>Lang</th>
+                            </tr>
+                            @foreach (var meanin in item.Meanings)
+                            {
+                                <tr>
+                                    <td>@meanin.Meaning</td>
+                                    <td title="@meanin.SelectedLang.Name">@meanin.SelectedLang.Code</td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </td>
+
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>
