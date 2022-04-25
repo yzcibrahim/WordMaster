@@ -17,7 +17,8 @@ namespace DataAccessLayer.Repositories
 
         public override List<WordDefinition> List()
         {
-            var liste = _context.Set<WordDefinition>().Include(c=>c.Lang).ToList();
+            var liste = _context.Set<WordDefinition>().Include(c=>c.Lang)
+                .Include(c=>c.WordMeanings).ThenInclude(c=>c.Lang).ToList();
             return liste;
         }
 

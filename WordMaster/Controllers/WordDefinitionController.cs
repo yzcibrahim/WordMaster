@@ -34,8 +34,26 @@ namespace WordMaster.Controllers
                     Word = item.Word,
                     LangId = item.LangId,
                     LangCode = item.Lang.Code,
-                    LangName = item.Lang.Name
+                    LangName = item.Lang.Name,
+                    Meanings = new List<WordMeaningViewModel>()
                 };
+
+                foreach (var meaning in item.WordMeanings)
+                {
+                    lwm.Meanings.Add(new WordMeaningViewModel()
+                    {
+                        Id = meaning.Id,
+                        LangId = meaning.LangId,
+                        Meaning = meaning.Meaning,
+                        WordDefinitionId = meaning.WordDefinitionId,
+                        SelectedLang = new LanguageViewModel()
+                        {
+                            Code = meaning.Lang.Code,
+                            Id = meaning.Lang.Id,
+                            Name = meaning.Lang.Name
+                        }
+                    });
+                }
 
                 model.Add(lwm);
             }
@@ -67,7 +85,7 @@ namespace WordMaster.Controllers
             WordDefinition entity = new WordDefinition()
             {
                 Id = model.Id,
-                 LangId = model.LangId,
+                LangId = model.LangId,
                 Word = model.Word
             };
 

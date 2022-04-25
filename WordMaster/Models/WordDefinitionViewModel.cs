@@ -13,5 +13,7 @@ namespace WordMaster.Models
 
         public string LangCode { get; set; }
         public string LangName { get; set; }
+
+        public List<WordMeaningViewModel> Meanings { get; set; }
     }
 }
