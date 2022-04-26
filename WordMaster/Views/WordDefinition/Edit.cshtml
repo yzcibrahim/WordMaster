@@ -44,9 +44,25 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-7">
-        <div class="row">buraya yeni ekleme gelcek</div>
-        <div class="row" id="ListMeaningPartial">buraya meaning partial</div>
-    </div>
+        @if (Model.Id > 0)
+        {
+        <div class="row">
+            <div class="col-md-4"><input class="form-control" type="text" id="newMeaning" /></div>
+            <div class="col-md-2">
+                <select class="form-control" id="MeaninLangId" name="MeaninLangId">
+                    @foreach (var item in ViewBag.Langs)
+                    {
+                        <option title="@item.Name" value="@item.Id">@item.Code</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-1"><input onclick="AddNewMeaning()" type="button" value="Kaydet" /></div>
+            <div class="col-md-5"></div>
+
+        </div>
+        }
+            <div class="row" id="ListMeaningPartial"></div>
+        </div>
 </div>
 
 <div>
@@ -55,7 +71,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+<script>
     $().ready(function () {
         @if (Model.Id > 0)
             {
@@ -63,7 +79,31 @@
         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
         </Text>
                 }
-        });
-    </script>
+    });
+
+        function AddNewMeaning() {
+
+            let data = {
+                "WordDefinitionId":@Model.Id,
+                "Meaning": $('#newMeaning').val(),
+                "LangId": $('#MeaninLangId').val()
+            }
+
+            console.log(data);
+            $.post("/WordMeaning/AddNewMeaningToWord", data,
+                function (res) {
+                    console.log(res);
+                    if (res.success == true) {
+                        alert("Kayıt Başarılı");
+                         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+                    }
+                    else {
+                        alert(res.message);
+                    }
+            });
+
+        }
+
+</script>
 
 }

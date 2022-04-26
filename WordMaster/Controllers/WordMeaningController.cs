@@ -94,6 +94,21 @@ namespace WordMaster.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public JsonResult AddNewMeaningToWord(WordMeaningViewModel model)
+        {
+            if(String.IsNullOrWhiteSpace(model.Meaning))
+                return Json(new { success=false,message="anlam boş olamaz" });
+            
+            WordMeaning entity = new WordMeaning();
+            entity.LangId = model.LangId;
+            entity.Meaning = model.Meaning;
+            entity.WordDefinitionId = model.WordDefinitionId;
+            _repository.Add(entity);
+            // return Json(new { success = true });
+            return Json(new { success=true});
+        }
+
         // GET: LanguageController/Delete/5
         public ActionResult Delete(int id)
         {
