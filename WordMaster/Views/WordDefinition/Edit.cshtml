@@ -14,33 +14,38 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (Model.Id > 0)
             {
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
             }
             <div class="form-group">
                 <label asp-for="Word" class="control-label"></label>
                 <input asp-for="Word" class="form-control" />
                 <span asp-validation-for="Word" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
-              @*  <input asp-for="LangId" class="form-control" />*@
-            <select class="form-control" id="LangId" name="LangId">
-                @foreach (var item in ViewBag.Langs)
-                {
-                <option title="@item.Name" value="@item.Id">@item.Code</option>
-                }
-            </select>
+                @*  <input asp-for="LangId" class="form-control" />*@
+                <select class="form-control" id="LangId" name="LangId">
+                    @foreach (var item in ViewBag.Langs)
+                    {
+                        <option title="@item.Name" value="@item.Id">@item.Code</option>
+                    }
+                </select>
                 <span asp-validation-for="LangId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+        <div class="row">buraya yeni ekleme gelcek</div>
+        <div class="row" id="ListMeaningPartial">buraya meaning partial</div>
     </div>
 </div>
 
@@ -50,4 +55,15 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    $().ready(function () {
+        @if (Model.Id > 0)
+            {
+         <Text>
+        $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+        </Text>
+                }
+        });
+    </script>
+
 }

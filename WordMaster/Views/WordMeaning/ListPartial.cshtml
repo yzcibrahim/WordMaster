@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WordMaster.Models.WordMeaningViewModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meaning)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LangId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WordDefinitionId)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Meaning)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedLang.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WordDefinitionId)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

@@ -36,6 +36,17 @@ namespace WordMaster.Controllers
             return View(model);
         }
 
+        public IActionResult ListPartial(int defId)
+        {
+            List<WordMeaningViewModel> model = new List<WordMeaningViewModel>();
+
+            List<WordMeaning> liste = _repository.ListByDefId(defId);
+            var serializedText = JsonSerializer.Serialize(liste);
+            model = JsonSerializer.Deserialize<List<WordMeaningViewModel>>(serializedText);
+
+            return PartialView(model);
+        }
+
         // GET: LanguageController/Edit/5
         public ActionResult Edit(int? id)
         {

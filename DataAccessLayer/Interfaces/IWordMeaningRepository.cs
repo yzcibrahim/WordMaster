@@ -9,6 +9,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IWordMeaningRepository:IRepositoryBase<WordMeaning>
     {
+        List<WordMeaning> ListByDefId(int defId);
         //List<WordMeaning> List();
         //WordMeaning GetById(int id);
         //void Add(WordMeaning entity);
