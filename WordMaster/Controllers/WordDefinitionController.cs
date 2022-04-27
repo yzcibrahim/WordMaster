@@ -22,16 +22,26 @@ namespace WordMaster.Controllers
         // GET: LanguageController
         public ActionResult Index()
         {
-            return View();
+            WordDefIndexViewModel model = new WordDefIndexViewModel();
+            var langs = _langRepository.List();
+            model.Langs = new List<LanguageViewModel>();
+
+            foreach (var lng in langs)
+            {
+        model.Langs.Add(new LanguageViewModel() { Id = lng.Id, Code = lng.Code, Name = lng.Name });
+            }
+
+            return View(model);
         }
 
-        public IActionResult ListPartial(string searchKeyword)
+        public IActionResult ListPartial(string searchKeyword,int? selectedLang)
         {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
 
-            List<WordDefinition> liste = searchKeyword != null ?
-                                        _repository.List(searchKeyword) :
-                                        _repository.List();
+            //List<WordDefinition> liste = searchKeyword != null ?
+            //                            _repository.List(searchKeyword) :
+            //                            _repository.List();
+            List<WordDefinition> liste = _repository.List(searchKeyword, selectedLang);
 
             foreach (WordDefinition item in liste)
             {

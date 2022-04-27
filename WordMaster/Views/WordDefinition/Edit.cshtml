@@ -76,7 +76,7 @@
         @if (Model.Id > 0)
             {
          <Text>
-        $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+        refresh();
         </Text>
                 }
     });
@@ -95,14 +95,17 @@
                     console.log(res);
                     if (res.success == true) {
                         alert("Kayıt Başarılı");
-                         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+                        refresh();
                     }
                     else {
                         alert(res.message);
                     }
             });
 
-        }
+    }
+    function refresh() {
+         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+    }
 
 </script>
 

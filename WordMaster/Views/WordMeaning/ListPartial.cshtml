@@ -16,6 +16,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.WordDefinitionId)
             </th>
+            <th></th>
            
         </tr>
     </thead>
@@ -34,8 +35,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.WordDefinitionId)
             </td>
+            <td><i class="bi bi-trash" onclick="DeleteMeaning(@item.Id)"></i></td>
            
         </tr>
 }
     </tbody>
 </table>
+
+
+    <script>
+        function DeleteMeaning(id){
+        $.post("/WordMeaning/DeleteByAjax", {"id":id},
+                function (res) {
+                    console.log(res);
+                    if (res == true) {
+                        refresh();
+                    }
+                    else {
+                        alert("beklenmedik hata");
+                    }
+            });
+    }
+    </script>
+
