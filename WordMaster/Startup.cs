@@ -34,6 +34,8 @@ namespace WordMaster
             services.AddScoped<IWordDefinitionRepository, WordDefinitionRepository>();
             services.AddScoped<IWordMeaningRepository, WordMeaningRepository>();
             services.AddScoped<ITestRepository, TestRepository>();
+
+           // services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

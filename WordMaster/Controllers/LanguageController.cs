@@ -38,6 +38,11 @@ namespace WordMaster.Controllers
             return View(model);
         }
 
+        public IActionResult Index1()
+        {
+            return View();
+        }
+
 
 
         // GET: LanguageController/Create

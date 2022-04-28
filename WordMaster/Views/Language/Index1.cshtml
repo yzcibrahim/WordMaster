@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="row">
+    <div class="col-md-3">id:<input type="text" value="0" readonly id="langId" /></div>
+    <div class="col-md-3">Code:<input type="text" id="txtCode" /></div>
+    <div class="col-md-3">Name:<input type="text" id="txtName" /></div>
+    <div class="col-md-3"><input type="button" value="Kaydet" onclick="Save()" /></div>
+</div>
+
+<div id="divLangList">
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Code</th>
+        </tr>
+        <tbody id="langBody">
+            
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts
+{
+<script>
+    $(document).ready(getLangData);
+
+    function Save() {
+        console.log("save executed:")
+        console.log("ID:" + $('#langId').val());
+        console.log("code:" + $('#txtCode').val());
+        console.log("name:" + $('#txtName').val());
+        var data = {
+            "id": $('#langId').val(),
+            "code": $('#txtCode').val(),
+            "name": $('#txtName').val()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/api/lang",
+            data: data,
+            success: function (data) {
+                if (data)
+                    alert("KAyıt başarılı");
+                getLangData();
+            },
+            dataType: "JSON"
+        });
+
+    }
+
+    function getLangData() {
+        $.ajax({
+            url: "/api/lang",
+            data: null,
+            success: function (res) {
+                console.log(res);
+                $('#langBody').html("");
+                res.map(function (lng) {
+                    //   $('#divLangList').append("<div>"+lng.code+" : "+lng.name+"</div>")
+                    $('#langBody').append("<tr><td>"+lng.id+"</td><td>"+lng.code+"</td><td>"+lng.name+"</td></tr>")
+                });
+            },
+            dataType: "JSON"
+        });
+    }
+   
+</script>
+}
