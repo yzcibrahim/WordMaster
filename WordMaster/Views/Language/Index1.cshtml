@@ -86,7 +86,28 @@
     }
 
     function deleteLang(id) {
-        alert(id + "silinecek");
+     //   alert(id + "silinecek");
+        $.ajax({
+            type: "DELETE",
+            url: "/api/lang/" + id,
+            success: function (data, textstatus, xhr) {
+                console.log(textstatus);
+                console.log(xhr);
+                if (xhr.status == 200) {
+                    if (data)
+                        alert("silindi");
+                    getLangData();
+                }
+                else {
+                    alert("hata oluştu");
+                }
+            },
+            error: function (data) {
+                alert("error");
+            },
+            dataType: "JSON"
+        });
+
     }
 
     function edit(id, code, name) {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,10 +38,10 @@ namespace WordMaster.API
 
         // POST api/<LangController>
         [HttpPost]
-        public bool Post([FromForm] Language entity)
+        public IActionResult Post([FromForm] Language entity)
         {
             _repository.Add(entity);
-            return true;
+            return Created("",true);
         }
 
         // PUT api/<LangController>/5
@@ -53,8 +54,20 @@ namespace WordMaster.API
 
         // DELETE api/<LangController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+
+            try
+            {
+                _repository.Delete(id);
+            }
+            catch (Exception)
+            {
+
+             //   return StatusCode(403);
+                return Forbid();
+            }
+            return Ok(true);
         }
     }
 }
