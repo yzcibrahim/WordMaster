@@ -40,17 +40,32 @@
             "name": $('#txtName').val()
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/api/lang",
-            data: data,
-            success: function (data) {
-                if (data)
-                    alert("KAyıt başarılı");
-                getLangData();
-            },
-            dataType: "JSON"
-        });
+        if ($('#langId').val() > 0) {
+            $.ajax({
+                type: "PUT",
+                url: "/api/lang/" + $('#langId').val(),
+                data: data,
+                success: function (data) {
+                    if (data)
+                        alert("KAyıt başarılı");
+                    getLangData();
+                },
+                dataType: "JSON"
+            });
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/api/lang",
+                data: data,
+                success: function (data) {
+                    if (data)
+                        alert("KAyıt başarılı");
+                    getLangData();
+                },
+                dataType: "JSON"
+            });
+        }
 
     }
 
@@ -63,11 +78,22 @@
                 $('#langBody').html("");
                 res.map(function (lng) {
                     //   $('#divLangList').append("<div>"+lng.code+" : "+lng.name+"</div>")
-                    $('#langBody').append("<tr><td>"+lng.id+"</td><td>"+lng.code+"</td><td>"+lng.name+"</td></tr>")
+                    $('#langBody').append("<tr><td><input type='button' onclick=deleteLang('" + lng.id + "') value='sil' /><input type='button' onclick=edit('" + lng.id + "','" + lng.code + "','" + lng.name + "') value='Edit' /></<td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>")
                 });
             },
             dataType: "JSON"
         });
+    }
+
+    function deleteLang(id) {
+        alert(id + "silinecek");
+    }
+
+    function edit(id, code, name) {
+        console.log(id + "--" + code + "--" + name);
+        $('#langId').val(id);
+        $('#txtCode').val(code);
+        $('#txtName').val(name);
     }
    
 </script>

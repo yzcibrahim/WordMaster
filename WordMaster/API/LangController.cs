@@ -45,8 +45,10 @@ namespace WordMaster.API
 
         // PUT api/<LangController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public bool Put(int id, [FromForm] Language entity)
         {
+            _repository.Update(entity);
+            return true;
         }
 
         // DELETE api/<LangController>/5
