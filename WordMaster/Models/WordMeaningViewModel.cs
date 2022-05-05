@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace WordMaster.Models
     {
         public int Id { get; set; }
         public string Meaning { get; set; }
+        [Range(1,int.MaxValue,ErrorMessage ="lang seçilmelidir.")]
         public int LangId { get; set; }
         public int? WordDefinitionId { get; set; }
 

@@ -23,7 +23,7 @@ namespace WordMaster.Controllers
 
         public IActionResult Index()
         {
-            _repository.Add(new DataAccessLayer.Entities.Test() { TestName = "test1" });
+           // _repository.Add(new DataAccessLayer.Entities.Test() { TestName = "test1" });
 
             return View();
         }

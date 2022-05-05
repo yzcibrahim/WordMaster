@@ -36,9 +36,9 @@
                 @Html.DisplayFor(modelItem => item.WordDefinitionId)
             </td>
             <td>
-      @*  <button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>*@
-            <i class="bi bi-trash" onclick="DeleteMeaningPopUp(@item.Id)"></i>
-            
+                @*  <button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>*@
+                <i class="bi bi-trash" style="cursor:pointer" onclick="DeleteMeaningPopUp(@item.Id)"></i>
+                <i class="bi bi-pen" style="cursor:pointer" onclick="EditMeaning('@item.Id', '@item.Meaning', '@item.SelectedLang.Id')"></i>
             </td>
            
         </tr>

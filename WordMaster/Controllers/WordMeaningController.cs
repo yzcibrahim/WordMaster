@@ -100,11 +100,22 @@ namespace WordMaster.Controllers
             if(String.IsNullOrWhiteSpace(model.Meaning))
                 return Json(new { success=false,message="anlam boş olamaz" });
             
+            if(!ModelState.IsValid)
+            {
+                return Json(new { success = false,message="tüm alanlar girilmelidir." });
+            }
+
             WordMeaning entity = new WordMeaning();
             entity.LangId = model.LangId;
             entity.Meaning = model.Meaning;
             entity.WordDefinitionId = model.WordDefinitionId;
-            _repository.Add(entity);
+            entity.Id = model.Id;
+            if (entity.Id > 0)
+                _repository.Update(entity);
+            else
+            {
+                _repository.Add(entity);
+            }
             // return Json(new { success = true });
             return Json(new { success=true});
         }
