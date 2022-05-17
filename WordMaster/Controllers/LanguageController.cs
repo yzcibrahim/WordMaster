@@ -2,10 +2,12 @@
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WordMaster.Filters;
 using WordMaster.Models;
 
 namespace WordMaster.Controllers
@@ -13,14 +15,24 @@ namespace WordMaster.Controllers
     public class LanguageController : Controller
     {
         ILanguageRepository _repository;
-        public LanguageController(ILanguageRepository repository)
+        IMemoryCache _memoryCache;
+        public LanguageController(ILanguageRepository repository, IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
             _repository = repository;
         }
         // GET: LanguageController
+        [MyFirstActionFilter]
         public ActionResult Index()
         {
             List<LanguageViewModel> model = new List<LanguageViewModel>();
+            
+            if(_memoryCache.TryGetValue("langs",out model))
+            {
+                return View(model);
+            }
+
+            model = new List<LanguageViewModel>();
 
             List<Language> liste = _repository.List();
 
@@ -35,6 +47,10 @@ namespace WordMaster.Controllers
 
                 model.Add(lwm);
             }
+
+            var bitis = DateTime.Now.AddMinutes(1);
+            _memoryCache.Set("langs", model, bitis);
+
             return View(model);
         }
 
@@ -102,6 +118,7 @@ namespace WordMaster.Controllers
             {
                 _repository.Add(entity);
             }
+            _memoryCache.Remove("langs");
             return RedirectToAction("Index");
         }
 

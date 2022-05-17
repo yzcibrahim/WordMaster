@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
@@ -35,6 +36,7 @@ namespace DataAccessLayer.Repositories
 
         public virtual List<T> List()
         {
+            Thread.Sleep(2000);
             return _context.Set<T>().ToList();
         }
 

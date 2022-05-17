@@ -1,39 +1,48 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WordMaster.Filters;
 using WordMaster.Models;
 
 namespace WordMaster.Controllers
 {
     public class WordDefinitionController : Controller
     {
-        IWordDefinitionRepository _repository;
-        ILanguageRepository _langRepository;
+        readonly IWordDefinitionRepository _repository;
+        readonly ILanguageRepository _langRepository;
         public WordDefinitionController(IWordDefinitionRepository repository, ILanguageRepository langRepository)
         {
             _repository = repository;
             _langRepository = langRepository;
         }
         // GET: LanguageController
+      
+        [MyFirstActionFilter]
         public ActionResult Index()
         {
+            Request.Headers.Add("test", "asd");
             WordDefIndexViewModel model = new WordDefIndexViewModel();
             var langs = _langRepository.List();
+           
+
+            
             model.Langs = new List<LanguageViewModel>();
 
             foreach (var lng in langs)
             {
-        model.Langs.Add(new LanguageViewModel() { Id = lng.Id, Code = lng.Code, Name = lng.Name });
+                model.Langs.Add(new LanguageViewModel() { Id = lng.Id, Code = lng.Code, Name = lng.Name });
             }
 
             return View(model);
         }
 
+        [MyFirstActionFilter]
         public IActionResult ListPartial(string searchKeyword,int? selectedLang)
         {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
@@ -77,6 +86,7 @@ namespace WordMaster.Controllers
             return PartialView(model);
         }
         // GET: LanguageController/Edit/5
+        [MyFirstActionFilter]
         public ActionResult Edit(int? id)
         {
             WordDefinitionViewModel model = new WordDefinitionViewModel();
@@ -96,6 +106,7 @@ namespace WordMaster.Controllers
         // POST: LanguageController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MyFirstActionFilter]
         public ActionResult Edit(WordDefinitionViewModel model)
         {
             WordDefinition entity = new WordDefinition()
@@ -117,6 +128,7 @@ namespace WordMaster.Controllers
         }
 
         // GET: LanguageController/Delete/5
+        [MyFirstActionFilter]
         public ActionResult Delete(int id)
         {
             _repository.Delete(id);
@@ -126,6 +138,7 @@ namespace WordMaster.Controllers
         // POST: LanguageController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MyFirstActionFilter]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

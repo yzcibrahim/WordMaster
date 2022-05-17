@@ -1,20 +1,19 @@
 using DataAccessLayer;
-using DataAccessLayer.Interfaces;
-using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WordMaster
+namespace WmApi
 {
     public class Startup
     {
@@ -28,18 +27,15 @@ namespace WordMaster
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<WordMaseterDbContext>(db)
             services.AddDbContext<WordMasterDbContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("MssqlConnection")));
-            services.AddControllersWithViews();
-            services.AddScoped<ILanguageRepository, LanguageRepository>();
-            services.AddScoped<IWordDefinitionRepository, WordDefinitionRepository>();
-            services.AddScoped<IWordMeaningRepository, WordMeaningRepository>();
-            services.AddScoped<ITestRepository, TestRepository>();
-            services.AddSession();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IMemoryCache, MemoryCache>();
-            // services.AddControllers().AddNewtonsoftJson();
+
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WmApi", Version = "v1" });
+            });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,22 +44,24 @@ namespace WordMaster
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WmApi v1"));
             }
-            else
+            app.UseCors(builder =>
             {
-                app.UseExceptionHandler("/Home/Error");
-            }
-            app.UseStaticFiles();
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }
